@@ -1,0 +1,13 @@
+(1, 1-6) STRING string
+(1, 8-14) ID mensaje
+(1, 1-1) NEWLINE \n
+(2, 1-7) ID mensaje
+(2, 9-9) IGUAL =
+(2, 11-37) CADENASTRING A apu le gusta el garrote
+(2, 1-1) NEWLINE \n
+(3, 1-8) ID imprimir
+(3, 10-16) ID mensaje
+(3, 1-1) NEWLINE \n
+(4, 1-9) ID sdawdwada
+(4, 1-1) NEWLINE \n
+(5, 1-1) EOF $
