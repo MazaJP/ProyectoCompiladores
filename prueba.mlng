@@ -1,4 +1,21 @@
+int x
+float y
 string mensaje
-mensaje = "A apu le gusta comis"
-imprimir mensaje
-sdawdwada
+bool activo
+
+x = 10
+y = 5.5
+mensaje = "Hola Mundo"
+activo = true
+
+if x >= 10:
+    write mensaje
+    x = x + 1
+else:
+    write "Menor a diez"
+
+while x != 15:
+    x = x + 1
+
+read x
+write suma(x, y)
