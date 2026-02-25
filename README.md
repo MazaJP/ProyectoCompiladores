@@ -1,59 +1,50 @@
-MiniLand Lexer
-Manual de Usuario
+Analizador Léxico: MiniLand (Fase #1)
+Este proyecto consiste en el diseño e implementación de un analizador léxico  para el lenguaje MiniLand, desarrollado en la Universidad Rafael Landívar.
 
-1, Descripción de su uso:
+Especificaciones Técnicas
+Conjunto de Tokens
+El lenguaje reconoce las siguientes categorías de tokens:
 
-Programa que realiza el análisis léxico del lenguaje MiniLand.
-Lee un archivo .mlng o .txt, identifica tokens y genera un archivo .out con los resultados.
 
-2. Ejecutar
+Palabras Reservadas: int, float, string, bool, if, else, while, funcion, read, return, imprime, true, false.
 
-Ejecutar Main.java.
 
-3. Ingresar la ruta del archivo cuando se solicite.
+Operadores: Aritméticos (+, -, *, /), de asignación (=) y relacionales (>, <, >=, <=, ==, !=).
 
-Ejemplo:
 
-C:\Users\USUARIO\Desktop\prueba.mlng
----> Lee Entrada
+Literales: Números enteros (NUMENTERO), decimales (NUMDECIMAL) y cadenas de texto entre comillas (CADENASTRING).
 
-4, Archivo con código MiniLand.
 
-Ejemplo de lo que contiene:
+Símbolos Especiales: (, ), ,, :, ;.
 
-int x
-x = 10
-write x
-📤 Salida
+Gramática (BNF)
+El análisis se basa en una gramática determinística para evitar ambigüedades. Algunos componentes clave incluyen:
 
-Se genera automáticamente:
 
-nombreArchivo.out
+Estructura General: Un programa consiste en una lista de sentencias que finaliza con un token EOF.
 
-Formato de tokens:
 
-(linea, colInicio-colFin) TIPO lexema
+Sentencias: Incluye declaraciones de tipo, asignaciones, estructuras de control (if, while), definiciones de función y operaciones de entrada/salida.
 
-Ejemplo:
 
-(1, 1-3) INT int
-(2, 5-6) INT_LITERAL 10
-(4, 1-1) EOF $
+Expresiones: Maneja precedencia de operadores mediante definiciones de términos y factores.
 
-Reconocimiento de tokens:
 
-Palabras clave: INT, FLOAT, STRING, BOOL, IF, ELSE, WHILE, READ, WRITE
+Errores Detectados
+El escáner identifica y reporta los siguientes problemas léxicos:
 
-Identificadores: letras + números (máx. 31 caracteres)
+Caracteres inválidos.
 
-Literales: enteros, decimales y cadenas
+Cadenas de texto sin cerrar.
 
-Operadores: + - * / = > < >= <= == !=
+Números mal formados.
 
-Símbolos: ( ) , :
+Identificadores que exceden los 31 caracteres.
 
-Verificador de  Errores
+Indentación inconsistente o inválida.
 
-Si hay caracteres inválidos se muestra:
+Integrantes del Proyecto:
 
-line X, col Y: ERROR caracter invalido
+Ana Paula Ortiz Hernandez 
+
+Juan Palo Mazariegos Sepúlveda
