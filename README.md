@@ -52,7 +52,7 @@ Operadores: + - * / = > < >= <= == !=
 
 Símbolos: ( ) , :
 
-⚠ Errores
+Verificador de  Errores
 
 Si hay caracteres inválidos se muestra:
 
