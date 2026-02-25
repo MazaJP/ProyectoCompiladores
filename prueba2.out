@@ -23,7 +23,14 @@
 (7, 17-17) ID b
 (7, 1-1) NEWLINE \n
 (8, 1-1) NEWLINE \n
-(9, 1-5) WRITE write
-(9, 7-15) ID resultado
+(9, 3-12) ID comentario
+(9, 14-16) ID que
+(9, 18-19) ID no
+(9, 21-24) ID debe
+(9, 26-33) ID detectar
 (9, 1-1) NEWLINE \n
-(10, 1-1) EOF $
+(10, 1-1) NEWLINE \n
+(11, 1-5) WRITE write
+(11, 7-15) ID resultado
+(11, 1-1) NEWLINE \n
+(12, 1-1) $

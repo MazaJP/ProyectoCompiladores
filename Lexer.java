@@ -110,9 +110,8 @@ public class Lexer {
                         StringBuilder sb = new StringBuilder();
                         boolean esFloat = false;
 
-                        while (i < linea.length() &&
-                                (Character.isDigit(linea.charAt(i)) || linea.charAt(i) == '.')) {
-
+                        while (i < linea.length() && (Character.isDigit(linea.charAt(i)) || linea.charAt(i) == '.')) {
+ 
                             if (linea.charAt(i) == '.') {
                                 if (esFloat) break;
                                 esFloat = true;
@@ -138,9 +137,7 @@ public class Lexer {
                         int inicioCol = columna;
                         StringBuilder sb = new StringBuilder();
 
-                        while (i < linea.length() &&
-                                (Character.isLetterOrDigit(linea.charAt(i))
-                                        || linea.charAt(i) == '_')) {
+                        while (i < linea.length() && (Character.isLetterOrDigit(linea.charAt(i)) || linea.charAt(i) == '_')) {
 
                             sb.append(linea.charAt(i));
                             i++;
