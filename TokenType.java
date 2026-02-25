@@ -41,7 +41,7 @@ public enum TokenType {
     DOSP,
     PUNCOM,
 
-    // Estructurales
+    // Estructuras
     NEWLINE,
     INDENT,
     DEDENT,

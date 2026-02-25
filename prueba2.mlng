@@ -1,0 +1,9 @@
+int a
+int b
+int resultado
+
+a = 5
+b = 3
+resultado = a + b
+
+write resultado

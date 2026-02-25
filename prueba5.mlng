@@ -1,0 +1,12 @@
+int contador
+int limite
+
+contador = 0
+
+read limite
+
+while contador < limite:
+    write contador
+    contador = contador + 1
+
+write "Fin del ciclo"

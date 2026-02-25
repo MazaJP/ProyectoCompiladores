@@ -1,0 +1,15 @@
+funcion suma(a, b):
+    int resultado
+    resultado = a + b
+    return resultado
+
+int x
+int y
+int total
+
+x = 4
+y = 6
+
+total = suma(x, y)
+
+write total

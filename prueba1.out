@@ -1,0 +1,4 @@
+(1, 1-5) WRITE write
+(1, 7-18) CADENASTRING Hola Mundo
+(1, 1-1) NEWLINE \n
+(2, 1-1) EOF $

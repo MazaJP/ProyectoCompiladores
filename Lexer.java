@@ -169,10 +169,7 @@ public class Lexer {
                         else if (lexema.equals("true")) tipo = "TRUE";
                         else if (lexema.equals("false")) tipo = "FALSE";
 
-                        writer.write("(" + numeroLinea + ", " +
-                                inicioCol + "-" +
-                                (inicioCol + lexema.length() - 1) +
-                                ") " + tipo + " " + lexema);
+                        writer.write("(" + numeroLinea + ", " + inicioCol + "-" + (inicioCol + lexema.length() - 1) + ") " + tipo + " " + lexema);
                         writer.newLine();
 
                         continue;
@@ -215,53 +212,41 @@ public class Lexer {
                     }
 
                     if (c == '=') {
-                        writer.write("(" + numeroLinea + ", " +
-                                columna + "-" + columna +
-                                ") IGUAL =");
+                        writer.write("(" + numeroLinea + ", " + columna + "-" + columna +") IGUAL =");
                         writer.newLine();
                         i++; columna++;
                         continue;
                     }
 
                     if (c == '(') {
-                        writer.write("(" + numeroLinea + ", " +
-                                columna + "-" + columna +
-                                ") PARENI (");
+                        writer.write("(" + numeroLinea + ", " + columna + "-" + columna +") PARENI (");
                         writer.newLine();
                         i++; columna++;
                         continue;
                     }
 
                     if (c == ')') {
-                        writer.write("(" + numeroLinea + ", " +
-                                columna + "-" + columna +
-                                ") PAREND )");
+                        writer.write("(" + numeroLinea + ", " +columna + "-" + columna +") PAREND )");
                         writer.newLine();
                         i++; columna++;
                         continue;
                     }
 
                     if (c == ',') {
-                        writer.write("(" + numeroLinea + ", " +
-                                columna + "-" + columna +
-                                ") COMA ,");
+                        writer.write("(" + numeroLinea + ", " + columna + "-" + columna + ") COMA ,");
                         writer.newLine();
                         i++; columna++;
                         continue;
                     }
 
                     if (c == ':') {
-                        writer.write("(" + numeroLinea + ", " +
-                                columna + "-" + columna +
-                                ") DOSP :");
+                        writer.write("(" + numeroLinea + ", " + columna + "-" + columna +") DOSP :");
                         writer.newLine();
                         i++; columna++;
                         continue;
                     }
 
-                    System.out.println("line " + numeroLinea +
-                            ", col " + columna +
-                            ": ERROR caracter invalido '" + c + "'");
+                    System.out.println("line " + numeroLinea +", col " + columna +": ERROR caracter invalido '" + c + "'");
                     hayErrores = true;
 
                     i++;
@@ -278,7 +263,7 @@ public class Lexer {
                 writer.newLine();
             }
 
-            writer.write("(" + (numeroLinea + 1) + ", 1-1) EOF $");
+            writer.write("(" + (numeroLinea + 1) + ", 1-1) $");
             writer.newLine();
 
             reader.close();

@@ -1,0 +1,28 @@
+(1, 1-3) INT int
+(1, 5-8) ID edad
+(1, 1-1) NEWLINE \n
+(2, 1-1) NEWLINE \n
+(3, 1-4) READ read
+(3, 6-9) ID edad
+(3, 1-1) NEWLINE \n
+(4, 1-1) NEWLINE \n
+(5, 1-2) IF if
+(5, 4-7) ID edad
+(5, 9-10) OPDOBLE>=
+(5, 12-13) NUMENTERO 18
+(5, 14-14) DOSP :
+(5, 1-1) NEWLINE \n
+(6, 1-1) INDENT
+(6, 5-9) WRITE write
+(6, 11-25) CADENASTRING Mayor de edad
+(6, 1-1) NEWLINE \n
+(7, 1-1) DEDENT
+(7, 1-4) ELSE else
+(7, 5-5) DOSP :
+(7, 1-1) NEWLINE \n
+(8, 1-1) INDENT
+(8, 5-9) WRITE write
+(8, 11-25) CADENASTRING Menor de edad
+(8, 1-1) NEWLINE \n
+(9, 1-1) DEDENT
+(9, 1-1) EOF $
