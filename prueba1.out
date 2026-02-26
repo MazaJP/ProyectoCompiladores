@@ -2,4 +2,9 @@
 (1, 8-12) WRITE write
 (1, 14-25) CADENASTRING Hola Mundo
 (1, 1-1) NEWLINE \n
-(2, 1-1) $
+(2, 1-6) ID String
+(2, 8-12) ID texto
+(2, 14-14) IGUAL =
+(2, 16-27) CADENASTRING pongos 100
+(2, 1-1) NEWLINE \n
+(3, 1-1) $
