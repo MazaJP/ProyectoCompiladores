@@ -1,0 +1,37 @@
+
+funcion calcularPromedio(a, b, c):
+    float suma
+    suma = a + b + c
+    return suma / 3
+
+int x
+int y
+int z
+float promedio
+bool aprobado
+string mensaje
+
+write "Ingrese tres notas:"
+read x
+read y
+read z
+
+promedio = calcularPromedio(x, y, z)
+
+if promedio >= 61:
+    aprobado = true
+    mensaje = "Estudiante aprobado"
+else:
+    aprobado = false
+    mensaje = "Estudiante reprobado"
+
+int contador
+contador = 0
+
+while contador < 3:
+    write contador
+    contador = contador + 1
+
+write mensaje
+write "Promedio final:"
+write promedio

@@ -1,4 +1,5 @@
-(1, 1-5) WRITE write
-(1, 7-18) CADENASTRING Hola Mundo
+(1, 1-6) STRING string
+(1, 8-12) WRITE write
+(1, 14-25) CADENASTRING Hola Mundo
 (1, 1-1) NEWLINE \n
-(2, 1-1) EOF $
+(2, 1-1) $
