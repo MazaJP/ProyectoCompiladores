@@ -74,7 +74,7 @@ public class Lexer {
 
                     char c = linea.charAt(i);
 
-                    // Ignorar espacios internos
+                    // Ignorar espacios internos 
                     if (Character.isWhitespace(c)) {
                         i++;
                         columna++;
@@ -82,6 +82,11 @@ public class Lexer {
                     }
 
                     // proceso que detecta las cadenas de texto
+
+                    if (c == '#')
+                    {
+                        break;
+                    }
                     if (c == '"') {
 
                         int inicioCol = columna;
@@ -257,6 +262,14 @@ public class Lexer {
                         i++; columna++;
                         continue;
                     }
+
+                      if (c == ';') {
+                        writer.write("(" + numeroLinea + ", " + columna + "-" + columna +") PUNCOM :");
+                        writer.newLine();
+                        i++; columna++;
+                        continue;
+                    }
+
 
                     // Detecta los errores en las cadenas
                     System.out.println("line " + numeroLinea + ", col " + columna +": ERROR caracter invalido '" + c + "'");

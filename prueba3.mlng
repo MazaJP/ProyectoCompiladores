@@ -1,8 +1,0 @@
-int edad
-
-read edad
-
-if edad >= 18:
-    write "Mayor de edad"
-else:
-    write "Menor de edad"
