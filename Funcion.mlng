@@ -1,0 +1,5 @@
+funcion suma(int a, int b):
+    return a + b
+
+int resultado = suma(3, 4)
+write(resultado)

@@ -1,0 +1,40 @@
+# MiniLang - Archivo de prueba completo (sin errores)
+
+# --- Prueba 1: Hola Mundo ---
+write("Hola Mundo")
+
+# --- Prueba 2: Operacion aritmetica basica ---
+int a = 10
+int b = 5
+int result = a + b * 2
+write(result)
+
+# --- Prueba 3: Read + if ---
+int n
+read(n)
+if n > 0:
+    write("Positivo")
+else:
+    write("Cero o negativo")
+
+# --- Prueba 4: Funcion con parametros y return ---
+funcion suma(int x, int y):
+    int r = x + y
+    return r
+
+int s = suma(3, 4)
+write(s)
+
+# --- Prueba 5: Variables + Read/Write + while ---
+int count = 0
+while count < 3:
+    write(count)
+    count = count + 1
+
+# --- Extras: tipos primitivos ---
+float pi = 3.1416
+write(pi)
+
+bool flag = true
+if flag == true:
+    write("flag esta en true")

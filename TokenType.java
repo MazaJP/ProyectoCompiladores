@@ -1,49 +1,14 @@
 public enum TokenType {
-
-    // Palabras clave
-    INT,
-    FLOAT,
-    Tipo_String,
-    BOOL,
-    IF,
-    ELSE,
-    WHILE,
-    FUNCION,
-    READ,
-    RETURN,
-    IMPRIME,
-    TRUE,
-    FALSE,
-
-    // Identificadores y literales
-    ID,
-    NUMENTERO,
-    FNUMDECIMAL,
-    CADENASTRING,
-
-    // Operadores
-    SUMA,
-    RESTA,
-    MULTI,
-    DIV,
+    INT, FLOAT, STRING, BOOL,
+    IF, ELSE, WHILE,
+    FUNCION, RETURN,
+    READ, WRITE,
+    TRUE, FALSE,
+    AND, OR, NOT,
+    ID, NUMENTERO, NUMDECIMAL, CADENASTRING,
+    SUMA, RESTA, MULTI, DIV,
+    MAYORQ, MENORQ, MAYORIGU, MENORIGU, EQUIVA, NEGA,
     IGUAL,
-    MAYORQ,
-    MENORQ,
-    MAYORIGU,
-    MENORIGU,
-    EQUIVA,
-    NEGA,
-
-    // Símbolos
-    PARENI,
-    PAREND,
-    COMA,
-    DOSP,
-    PUNCOM,
-
-    // Estructuras
-    NEWLINE,
-    INDENT,
-    DEDENT,
-    EOF
+    PARENI, PAREND, COMA, DOSP, PUNCOM,
+    NEWLINE, INDENT, DEDENT, EOF
 }

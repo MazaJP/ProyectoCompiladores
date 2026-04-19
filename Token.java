@@ -6,8 +6,7 @@ public class Token {
     private int columnaInicio;
     private int columnaFin;
 
-    public Token(TokenType tipo, String lexema, int linea,int columnaInicio, int columnaFin) {
-
+    public Token(TokenType tipo, String lexema, int linea, int columnaInicio, int columnaFin) {
         this.tipo = tipo;
         this.lexema = lexema;
         this.linea = linea;
@@ -15,10 +14,15 @@ public class Token {
         this.columnaFin = columnaFin;
     }
 
+    public TokenType getTipo() { return tipo; }
+    public String getLexema() { return lexema; }
+    public int getLinea() { return linea; }
+    public int getColumnaInicio() { return columnaInicio; }
+    public int getColumnaFin() { return columnaFin; }
+
     @Override
     public String toString() {
-        return "(" + linea + ", " +
-                columnaInicio + "-" + columnaFin + ") " +
-                tipo + " " + lexema;
+        return "(" + linea + ", " + columnaInicio + "-" + columnaFin + ") " + tipo +
+               (lexema.isEmpty() ? "" : " " + lexema);
     }
 }
