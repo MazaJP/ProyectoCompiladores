@@ -74,9 +74,8 @@ import java.util.*;
  */
 public class AnalizadorAscendente {
 
-    // ══════════════════════════════════════════════════════════════
     // GRAMÁTICA
-    // ══════════════════════════════════════════════════════════════
+
 
     private static final List<Produccion> GRAMATICA = new ArrayList<>();
 
@@ -144,10 +143,8 @@ public class AnalizadorAscendente {
         GRAMATICA.add(new Produccion(n++, "EXPR", "FALSE"));
     }
 
-    // ══════════════════════════════════════════════════════════════
     // PRECEDENCIA Y ASOCIATIVIDAD (para shunting-yard)
     // De menor a mayor: OR, AND, NOT, comparaciones, +/-, */
-    // ══════════════════════════════════════════════════════════════
 
     private static final Map<String, Integer> PRECEDENCIA = new HashMap<>();
     private static final Set<String> ASOC_DERECHA = new HashSet<>();
@@ -171,9 +168,9 @@ public class AnalizadorAscendente {
         ASOC_DERECHA.add("UNARIO");
     }
 
-    // ══════════════════════════════════════════════════════════════
+
     // ESTADO DEL ANALIZADOR
-    // ══════════════════════════════════════════════════════════════
+
 
     private final List<Token> tokens;
     private int pos;
@@ -205,9 +202,9 @@ public class AnalizadorAscendente {
 
     public List<String> getErrores() { return errores; }
 
-    // ══════════════════════════════════════════════════════════════
+
     // OPERACIONES FUNDAMENTALES DEL ANALIZADOR ASCENDENTE
-    // ══════════════════════════════════════════════════════════════
+
 
     /**
      * DESPLAZAR: mueve el token actual al tope de la pila y avanza.
@@ -230,9 +227,8 @@ public class AnalizadorAscendente {
         pila.push(new SimboloPila(p.getCabeza()));
     }
 
-    // ══════════════════════════════════════════════════════════════
     // AUXILIARES
-    // ══════════════════════════════════════════════════════════════
+
 
     private Token actual() { return tokens.get(pos); }
 
@@ -317,9 +313,8 @@ public class AnalizadorAscendente {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════
-    // PARSEO DE LISTA DE SENTENCIAS
-    // ══════════════════════════════════════════════════════════════
+
+
 
     private void parsearListaSentencias() {
         boolean primero = true;
@@ -346,9 +341,8 @@ public class AnalizadorAscendente {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════
     // PARSEO DE SENTENCIAS INDIVIDUALES
-    // ══════════════════════════════════════════════════════════════
+
 
     private void parsearSentencia() {
         yaRecupero = false; // resetear por cada sentencia nueva
@@ -609,14 +603,14 @@ public class AnalizadorAscendente {
         }
     }
 
-    // ══════════════════════════════════════════════════════════════
+
     // ANÁLISIS DE EXPRESIONES — ALGORITMO DE PATIO DE MANIOBRAS
-    // (Shunting-Yard, Dijkstra 1961) — método ascendente
+ //método ascendente
     //
     // pilaOps : pila auxiliar de operadores pendientes de reducir
     // DESPLAZA operandos/operadores; REDUCE cuando la precedencia
     // del tope es mayor o igual que el operador entrante.
-    // ══════════════════════════════════════════════════════════════
+
 
     private void parsearExpresion() {
         Deque<String> pilaOps  = new ArrayDeque<>();
@@ -628,7 +622,7 @@ public class AnalizadorAscendente {
             Token t    = actual();
             String tipo = t.getTipo().name();
 
-            // ── Lado izquierdo: operando o prefijo ─────────────
+            // Lado izquierdo: operando o prefijo
             if (esperaOperando) {
 
                 if (t.getTipo() == TokenType.NOT) {
