@@ -664,7 +664,7 @@ public class AnalizadorAscendente {
                     break;
                 }
 
-            // ── Lado derecho: operador binario o fin ───────────
+            // Lado derecho: operador binario o fin
             } else {
                 if (t.getTipo() == TokenType.PAREND
                         && pilaContienePareni(pilaOps)) {
