@@ -1,5 +1,5 @@
-int i = 0
-int limite = 5
-while i < limite:
-    write(i)
-    i = i + 1
+int countar
+countar = 0
+while count < 3:
+    Write(countar)
+    countar = countar + 1
