@@ -1,4 +1,46 @@
-int a = 5
-int b = 3
-int c = a + b * 2
-write(c)
+# --- Prueba 1: Hola Mundo ---
+Write("Hola Mundo")
+
+# --- Prueba 2: Operación aritmética básica ---
+int a
+int b
+int result
+a = 10
+b = 5
+result = a + b * 2
+Write(result)
+
+# --- Prueba 3: Read + if ---
+int n
+Write("Ingrese un numero:")
+Read(n)
+if n > 0:
+    Write("Positivo")
+else:
+    Write("Cero o negativo")
+
+# --- Prueba 4: Función con parámetros + return ---
+funcion suma(int x, int y):
+    int r
+    r = x + y
+    return r
+
+int s
+s = suma(3, 4)
+Write(s)
+
+# --- Prueba 5: Variables + Read/Write + while ---
+int count
+count = 0
+while count < 3:
+    Write(count)
+    count = count + 1
+
+float pi
+pi = 3.1416
+Write(pi)
+
+bool flag
+flag = true
+if flag == true:
+    Write("flag esta en true")

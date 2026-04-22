@@ -136,6 +136,13 @@ public class Lexer {
                     }
 
                     // Operadores de un carácter
+                    if (c == ';') {
+                        // Punto y coma tratado como terminador de sentencia (igual que NEWLINE)
+                        emitir(writer, new Token(TokenType.NEWLINE, "\\n", numeroLinea, columna, columna));
+                        i++; columna++;
+                        continue;
+                    }
+
                     TokenType ts = null;
                     switch (c) {
                         case '+': ts = TokenType.SUMA; break;
@@ -149,7 +156,6 @@ public class Lexer {
                         case ')': ts = TokenType.PAREND; break;
                         case ',': ts = TokenType.COMA; break;
                         case ':': ts = TokenType.DOSP; break;
-                        case ';': ts = TokenType.PUNCOM; break;
                     }
                     if (ts != null) {
                         emitir(writer, new Token(ts, String.valueOf(c), numeroLinea, columna, columna));
