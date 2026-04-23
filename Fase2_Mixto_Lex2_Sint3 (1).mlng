@@ -1,0 +1,20 @@
+# MiniLang - Mixto: 2 errores LÉXICOS + 3 errores SINTÁCTICOS
+
+# (L1) Identificador > 31 caracteres (debe reportarse y truncarse)
+int thisIdentifierIsDefinitelyMoreThanThirtyOneChars123;
+
+int x;
+x = 10;
+
+# (L2) Carácter inesperado '@' (se ignora y aún así la sentencia queda válida)
+x = x + @5;
+
+# (S1) Falta ':' en if
+if x > 0
+    Write("positivo");
+
+# (S2) Falta ')' en Read
+Read(x;
+
+# (S3) Llamada a función sin coma entre argumentos
+x = suma(1 2);

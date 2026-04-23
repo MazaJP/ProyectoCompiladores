@@ -1,3 +1,4 @@
+//catalogo de las palaras reservadas
 public enum TokenType {
     INT, FLOAT, STRING, BOOL,
     IF, ELSE, WHILE,

@@ -1,0 +1,21 @@
+# MiniLang - Errores SINTÁCTICOS (archivo 1)
+# Objetivo: provocar >=5 errores sintácticos (sin errores léxicos).
+int a;
+int b;
+a = 10;
+b = 5;
+# (E1) Falta ';' al final
+Write("Hola Mundo") a = 1;
+# (E2) Falta ')'
+Write("Missing paren";
+# (E3) if sin ':'
+if a > b:
+    Write("after if");
+# (E4) while sin INDENT (la siguiente línea NO está indentada)
+while a < 20:
+Write("no indent");
+a = a + 1;
+# (E5) Paréntesis extra
+b = (a + 2));
+# (E6) Llamada con argumentos sin coma
+a = suma(1 2);

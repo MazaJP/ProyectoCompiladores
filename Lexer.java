@@ -42,7 +42,7 @@ public class Lexer {
 
                 while (i < linea.length() && linea.charAt(i) == ' ') { espacios++; i++; }
 
-                // Línea vacía o comentario: no altera indentación
+                // Línea vacía o comentario: no altera
                 if (i >= linea.length() || linea.charAt(i) == '#') {
                     emitir(writer, new Token(TokenType.NEWLINE, "\\n", numeroLinea, 1, 1));
                     continue;

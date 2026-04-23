@@ -1,5 +1,0 @@
-int countar
-countar = 0
-while count < 3:
-    Write(countar)
-    countar = countar + 1

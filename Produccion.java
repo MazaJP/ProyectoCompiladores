@@ -1,12 +1,9 @@
-/**
- * Representa una producción de la gramática de MiniLang.
- * Forma: cabeza → cuerpo[0] cuerpo[1] ... cuerpo[n]
- */
+//guarda una regla de la gramática para que el parser la consulte al momento de reducir.
 public class Produccion {
 
-    private final int numero;
-    private final String cabeza;
-    private final String[] cuerpo;
+    private final int numero; //numero de la producion 
+    private final String cabeza; //lado izquierdo de la produccion
+    private final String[] cuerpo; //lado derecho de la produccion 
 
     public Produccion(int numero, String cabeza, String... cuerpo) {
         this.numero = numero;

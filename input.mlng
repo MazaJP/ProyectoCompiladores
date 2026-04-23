@@ -1,6 +1,0 @@
-int x
-read(x)
-if x > 0:
-    write("positivo")
-else:
-    write("negativo o cero")

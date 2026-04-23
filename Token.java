@@ -1,3 +1,4 @@
+//representa cada uno de los token identificados guardando 4 cosas importanes
 public class Token {
 
     private TokenType tipo;

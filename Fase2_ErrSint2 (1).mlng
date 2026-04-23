@@ -1,0 +1,29 @@
+# MiniLang - Errores SINTÁCTICOS (archivo 2)
+# Objetivo: provocar >=5 errores sintácticos (sin errores léxicos).
+# Función correcta para luego provocar errores en llamadas
+funcion inc(int x):
+    return x + 1;
+
+int a;
+a = 0;
+
+# (E1) Falta ':' en encabezado de función
+funcion bad(int x, int y)
+    Write("after bad");
+
+# (E2) Declaración sin identificador
+int = 5;
+
+# (E3) Llamada con coma final (falta argumento)
+a = inc(1,);
+
+# (E4) Funcion sin bloque indentado
+funcion vacia():
+Write("no indent");
+
+# (E5) if con ':' pero sin INDENT
+if a > 0:
+Write("no indent");
+
+# (E6) Expresión mal formada: operador inesperado '*'
+a = 1 + * 2;
