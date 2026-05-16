@@ -361,35 +361,33 @@ public class AnalizadorAscendente {
         }
     }
 
+//método ya desplazó todo lo que necesitaba
+   private void parsearDeclaracion() {
+    desplazar();  // desplazar a int/float/string/bool
+    reducirTipo(); // REDUCIR int/float/string/bool → TIPO
 
-    private void parsearDeclaracion() {
-        desplazar();  // desplazar a int/float/string/bool
-        reducirTipo(); // REDUCIR int/float/string/bool - TIPO
-
-        if (!es(TokenType.ID)) {
-            // después del tipo debe venir un nombre de variable
-            registrarError("se esperaba identificador", actual());
-            yaRecupero = true;
-            reducir(GRAMATICA.get(18)); //hace redusccion a la produccion 18
-            consumirNewline();
-            reducir(GRAMATICA.get(4));//hace reduccion a la produccion 4
-            return;
-        }
-        desplazar(); //se desplaza hacia Id
-
-        if (es(TokenType.IGUAL)) {
-            desplazar(); //desplazar a =
-            parsearExpresion(); //analiza el valor 
-            reducir(GRAMATICA.get(17)); //hace redusccion a la produccion 17
-            consumirNewline();
-        } else {
-            reducir(GRAMATICA.get(18));//hace redusccion a la produccion 18
-            consumirNewline();
-        }
-
+    if (!es(TokenType.ID)) {
+        // después del tipo debe venir un nombre de variable
+        registrarError("se esperaba identificador", actual());
+        yaRecupero = true;
+        reducir(GRAMATICA.get(18));
         consumirNewline();
-        reducir(GRAMATICA.get(4)); //hace reduccion a la produccion 4
+        reducir(GRAMATICA.get(4));
+        return;
     }
+    desplazar(); // desplazar ID
+
+    if (es(TokenType.IGUAL)) {
+        desplazar(); // desplazar =
+        parsearExpresion(); // analiza el valor
+        reducir(GRAMATICA.get(17)); // DECL → TIPO ID = EXPR
+    } else {
+        reducir(GRAMATICA.get(18)); // DECL → TIPO ID
+    }
+
+    consumirNewline(); // una sola vez, fuera del if/else
+    reducir(GRAMATICA.get(4)); // SENTENCIA → DECL NEWLINE
+}
 
     private void reducirTipo() {
         switch (pila.peek().getToken().getTipo()) {
