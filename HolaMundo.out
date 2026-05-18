@@ -1,0 +1,11 @@
+(1, 1-6) STRING string
+(1, 8-12) ID texto
+(1, 14-14) IGUAL =
+(1, 16-48) CADENASTRING Prueba de texto fase 3 proyecto
+(1, 1-1) NEWLINE \n
+(2, 1-5) WRITE write
+(2, 6-6) PARENI (
+(2, 7-11) ID texto
+(2, 12-12) PAREND )
+(2, 1-1) NEWLINE \n
+(3, 1-1) EOF $

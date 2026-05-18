@@ -1,0 +1,13 @@
+const int LIMITE = 5
+const double INCREMENTO = 1.5
+int contador = 0
+double acumulado = 0.0
+while contador < LIMITE:
+    acumulado = acumulado + INCREMENTO
+    contador = contador + 1
+    write(contador)
+    write(acumulado)
+write("Contador final:")
+write(contador)
+write("Acumulado final:")
+write(acumulado)

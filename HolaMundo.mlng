@@ -1,0 +1,2 @@
+string texto = "Prueba de texto fase 3 proyecto"
+write(texto)

@@ -64,11 +64,10 @@ import java.util.*;
  */
 public class AnalizadorAscendente {
 
-
     private static final List<Produccion> GRAMATICA = new ArrayList<>();
 
     static {
-        //contador de la produccion 
+        //contador de la produccion
         int n = 0;
         GRAMATICA.add(new Produccion(n++, "PROGRAMA",     "LISTA_SENT"));
         GRAMATICA.add(new Produccion(n++, "LISTA_SENT",   "LISTA_SENT", "SENTENCIA"));
@@ -131,9 +130,9 @@ public class AnalizadorAscendente {
         GRAMATICA.add(new Produccion(n++, "EXPR", "TRUE"));
         GRAMATICA.add(new Produccion(n++, "EXPR", "FALSE"));
     }
-    //se resuelve la presedencia por medio de que el numero mas grande se resuelve primero 
-    private static final Map<String, Integer> PRECEDENCIA = new HashMap<>();
 
+    //se resuelve la presedencia por medio de que el numero mas grande se resuelve primero
+    private static final Map<String, Integer> PRECEDENCIA = new HashMap<>();
     private static final Set<String> ASOC_DERECHA = new HashSet<>();
 
     static {
@@ -155,34 +154,35 @@ public class AnalizadorAscendente {
         ASOC_DERECHA.add("NOT");
         ASOC_DERECHA.add("UNARIO");
     }
-//lista de tokens 
+
+    //lista de tokens
     private final List<Token> tokens;
-    //token donde empezamos 
+    //token donde empezamos
     private int pos;
-    //push pop 
+    //push pop
     private final Deque<SimboloPila> pila = new ArrayDeque<>();
     private final List<String> errores    = new ArrayList<>();
 
-    //se acumulan los errores 
+    //se acumulan los errores
     private boolean yaRecupero = false;
 
     public AnalizadorAscendente(List<Token> tokens) {
         this.tokens = tokens; //agara la lista de los tokens
-        this.pos    = 0; 
-        pila.push(new SimboloPila("$"));//se indica el fondo de la pila
+        this.pos    = 0;
+        pila.push(new SimboloPila("$")); //se indica el fondo de la pila
     }
 
     public boolean analizar() {
         parsearListaSentencias();
-        //aplical la primera produccion que es la que cierra todo
+        //aplica la primera produccion que es la que cierra todo
         if (!pila.isEmpty() && pila.peek().getNombre().equals("LISTA_SENT")) {
             reducir(GRAMATICA.get(0));
         }
-//si algo queda algun token por analizar se tira error
+        //si queda algun token por analizar se tira error
         if (!es(TokenType.EOF)) {
             registrarError("token inesperado al final del archivo", actual());
         }
-//todo en orden 
+        //todo en orden
         return errores.isEmpty();
     }
 
@@ -191,33 +191,39 @@ public class AnalizadorAscendente {
     //DESPLAZAR: mueve el token actual al tope de la pila y avanza.
     private Token desplazar() {
         Token t = actual();
-        pila.push(new SimboloPila(t));//guarda el token como terminal 
-        if (pos < tokens.size() - 1) pos++; //siguiente token 
+        pila.push(new SimboloPila(t)); //guarda el token como terminal
+        if (pos < tokens.size() - 1) pos++; //siguiente token
         return t;
     }
 
-     //REDUCIR: saca los elementos del cuerpo de la producción y empuja el no-terminal de la cabeza
+    //REDUCIR: saca los elementos del cuerpo de la producción y empuja el no-terminal de la cabeza
     private void reducir(Produccion p) {
         for (int i = 0; i < p.getCuerpo().length; i++) {
-            pila.pop(); // saca los elementos de la pila depediedo cuantos token haya en la produ 
+            pila.pop(); // saca los elementos de la pila dependiendo cuantos token haya en la produ
         }
         pila.push(new SimboloPila(p.getCabeza())); // remplaza lo sacado por un no terminal
     }
 
-//devuelve el token actual
+    //devuelve el token actual
     private Token actual() { return tokens.get(pos); }
-//Mira el token que viene después del actual Si no hay siguiente devuelve el último 
+
+    //Mira el token que viene después del actual. Si no hay siguiente devuelve el último
     private Token siguiente() {
         return pos + 1 < tokens.size() ? tokens.get(pos + 1) : tokens.get(tokens.size() - 1);
     }
-//verifica el tipo del token
+
+    //verifica el tipo del token
     private boolean es(TokenType tipo) { return actual().getTipo() == tipo; }
-//revisa si el token es una palabra de tipo dato  
+
+    //revisa si el token es una palabra de tipo dato
+    //se agrego DOUBLE como tipo valido ademas de INT, FLOAT, STRING, BOOL
     private boolean esTipo(TokenType t) {
-        return t == TokenType.INT || t == TokenType.FLOAT
-            || t == TokenType.STRING || t == TokenType.BOOL;
+        return t == TokenType.INT    || t == TokenType.FLOAT
+            || t == TokenType.DOUBLE || t == TokenType.STRING
+            || t == TokenType.BOOL;
     }
-//revisa si el token actual puede ser el inicio de una expresión.
+
+    //revisa si el token actual puede ser el inicio de una expresión.
     private boolean esInicioExpresion() {
         switch (actual().getTipo()) {
             case ID: case NUMENTERO: case NUMDECIMAL: case CADENASTRING:
@@ -227,8 +233,7 @@ public class AnalizadorAscendente {
         }
     }
 
-    
-     //Formatea el mensaje de error con la ubicación exacta y lo agrega a la lista sin detener
+    //Formatea el mensaje de error con la ubicación exacta y lo agrega a la lista sin detener
     private void registrarError(String mensaje, Token t) {
         String simbolo;
         if (t.getTipo() == TokenType.NEWLINE || t.getTipo() == TokenType.EOF) {
@@ -239,9 +244,7 @@ public class AnalizadorAscendente {
         errores.add("Línea " + t.getLinea() + ", col " + t.getColumnaInicio() + ": " + simbolo + " Error: " + mensaje);
     }
 
-    
-    
-    //al detectar un error salta hasta el siguiente salto de linea  
+    //al detectar un error salta hasta el siguiente salto de linea
     private void recuperar() {
         yaRecupero = true;
         while (!es(TokenType.NEWLINE) && !es(TokenType.DEDENT) && !es(TokenType.EOF)) {
@@ -251,67 +254,66 @@ public class AnalizadorAscendente {
         if (es(TokenType.NEWLINE) && pos < tokens.size() - 1) pos++;
     }
 
-    
-     //Intenta desplazar el tipo esperado. Si no coincide, reporta error y NO avanza
+    //Intenta desplazar el tipo esperado. Si no coincide, reporta error y NO avanza
     private void esperarYDesplazar(TokenType tipo, String mensaje) {
-    if (es(tipo)) {
-        desplazar();
-    } else {
-         // si no es el esperado, reporta error usando el token anterior como referencia
-        Token referencia = pos > 0 ? tokens.get(pos - 1) : actual();
-        String simbolo;
-        if (actual().getTipo() == TokenType.NEWLINE || actual().getTipo() == TokenType.EOF) {
-            simbolo = "fin de línea";
+        if (es(tipo)) {
+            desplazar();
         } else {
-            simbolo = "'" + actual().getLexema() + "'";
+            // si no es el esperado, reporta error usando el token anterior como referencia
+            Token referencia = pos > 0 ? tokens.get(pos - 1) : actual();
+            String simbolo;
+            if (actual().getTipo() == TokenType.NEWLINE || actual().getTipo() == TokenType.EOF) {
+                simbolo = "fin de línea";
+            } else {
+                simbolo = "'" + actual().getLexema() + "'";
+            }
+            errores.add("Línea " + referencia.getLinea() + ", col " + referencia.getColumnaFin()
+                    + ": " + simbolo + " Error: " + mensaje);
+            yaRecupero = true;
         }
-        errores.add("Línea " + referencia.getLinea() + ", col " + referencia.getColumnaFin()
-                + ": " + simbolo + " Error: " + mensaje);
-        yaRecupero = true;
     }
-}
+
     //Consume el NEWLINE al final de una sentencia simple.
     //Si ya hubo error en esta sentencia, avanza sin reportar más.
     private void consumirNewline() {
-    if (yaRecupero) {
-        // ya hubo error en esta sentencia: saltar sin reportar más
-        while (!es(TokenType.NEWLINE) && !es(TokenType.DEDENT) && !es(TokenType.EOF)) {
-            if (pos < tokens.size() - 1) pos++;
-            else break;
+        if (yaRecupero) {
+            // ya hubo error en esta sentencia: saltar sin reportar más
+            while (!es(TokenType.NEWLINE) && !es(TokenType.DEDENT) && !es(TokenType.EOF)) {
+                if (pos < tokens.size() - 1) pos++;
+                else break;
+            }
+            if (es(TokenType.NEWLINE) && pos < tokens.size() - 1) pos++;
+            return; //sale
         }
-        if (es(TokenType.NEWLINE) && pos < tokens.size() - 1) pos++;
-        return; //sale
-    }
-    if (es(TokenType.NEWLINE)) {
-        desplazar(); // consume el token newline 
-    } else if (!es(TokenType.EOF) && !es(TokenType.DEDENT)) {
-        // hay algo donde debería haber NEWLINE
-        registrarError("se esperaba fin de línea", actual());
-        yaRecupero = true;
-        // saltar el resto de la línea
-        while (!es(TokenType.NEWLINE) && !es(TokenType.DEDENT) && !es(TokenType.EOF)) {
-            if (pos < tokens.size() - 1) pos++;
-            else break;
+        if (es(TokenType.NEWLINE)) {
+            desplazar(); // consume el token newline
+        } else if (!es(TokenType.EOF) && !es(TokenType.DEDENT)) {
+            // hay algo donde debería haber NEWLINE
+            registrarError("se esperaba fin de línea", actual());
+            yaRecupero = true;
+            // saltar el resto de la línea
+            while (!es(TokenType.NEWLINE) && !es(TokenType.DEDENT) && !es(TokenType.EOF)) {
+                if (pos < tokens.size() - 1) pos++;
+                else break;
+            }
+            if (es(TokenType.NEWLINE) && pos < tokens.size() - 1) pos++;
         }
-        if (es(TokenType.NEWLINE) && pos < tokens.size() - 1) pos++;
     }
-}
-
 
     private void parsearListaSentencias() {
-        boolean primero = true; // controla que producion de Lista sentencia va a usar
-    //Procesa sentencias mientras no sea fin de archivo ni fin de bloque.
+        boolean primero = true; // controla que produccion de Lista sentencia va a usar
+        //Procesa sentencias mientras no sea fin de archivo ni fin de bloque.
         while (!es(TokenType.EOF) && !es(TokenType.DEDENT)) {
 
             if (es(TokenType.NEWLINE)) {
                 desplazar(); //desplazarse a newline
-                reducir(GRAMATICA.get(3)); //va a la produccion 1
+                reducir(GRAMATICA.get(3)); //va a la produccion 3
             } else {
                 parsearSentencia(); // cualquier otro token inicia sentencia real
             }
 
             if (primero) {
-                reducir(GRAMATICA.get(2)); // va a la produccion 2 
+                reducir(GRAMATICA.get(2)); // va a la produccion 2
                 primero = false;
             } else {
                 reducir(GRAMATICA.get(1)); // va a la produccion 1
@@ -323,14 +325,17 @@ public class AnalizadorAscendente {
         }
     }
 
-
     private void parsearSentencia() {
         yaRecupero = false;
         Token t = actual();
         try {
             switch (t.getTipo()) {
-                case INT: case FLOAT: case STRING: case BOOL:
+                // tipos de dato normales inician una declaracion
+                case INT: case FLOAT: case DOUBLE: case STRING: case BOOL:
                     parsearDeclaracion(); break;
+                // const inicia una declaracion de constante: const TIPO ID [= EXPR]
+                case CONST:
+                    parsearDeclaracionConst(); break;
                 case ID:
                     parsearAsignacionOLlamada(); break;
                 case IF:
@@ -347,9 +352,9 @@ public class AnalizadorAscendente {
                     parsearWrite(); break;
                 default:
                     registrarError("inicio de sentencia inválido", t);
-                    recuperar();// salta al próximo NEWLINE 
+                    recuperar(); // salta al próximo NEWLINE
                     // pone SENTENCIA vacía para continuar
-                    pila.push(new SimboloPila("SENTENCIA")); 
+                    pila.push(new SimboloPila("SENTENCIA"));
             }
         } catch (Exception e) {
             if (!yaRecupero) {
@@ -361,49 +366,68 @@ public class AnalizadorAscendente {
         }
     }
 
-//método ya desplazó todo lo que necesitaba
-   private void parsearDeclaracion() {
-    desplazar();  // desplazar a int/float/string/bool
-    reducirTipo(); // REDUCIR int/float/string/bool → TIPO
+    // Analiza: const TIPO ID [= EXPR] NEWLINE
+    // Consume "const" y luego delega a parsearDeclaracion para el resto
+    private void parsearDeclaracionConst() {
+        desplazar(); // consumir "const"
 
-    if (!es(TokenType.ID)) {
-        // después del tipo debe venir un nombre de variable
-        registrarError("se esperaba identificador", actual());
-        yaRecupero = true;
-        reducir(GRAMATICA.get(18));
-        consumirNewline();
-        reducir(GRAMATICA.get(4));
-        return;
-    }
-    desplazar(); // desplazar ID
+        // despues de const debe venir obligatoriamente un tipo de dato
+        if (!esTipo(actual().getTipo())) {
+            registrarError("se esperaba tipo despues de 'const'", actual());
+            yaRecupero = true;
+            consumirNewline();
+            pila.push(new SimboloPila("SENTENCIA"));
+            return;
+        }
 
-    if (es(TokenType.IGUAL)) {
-        desplazar(); // desplazar =
-        parsearExpresion(); // analiza el valor
-        reducir(GRAMATICA.get(17)); // DECL → TIPO ID = EXPR
-    } else {
-        reducir(GRAMATICA.get(18)); // DECL → TIPO ID
+        // reutiliza toda la logica de parsearDeclaracion para el resto
+        parsearDeclaracion();
     }
 
-    consumirNewline(); // una sola vez, fuera del if/else
-    reducir(GRAMATICA.get(4)); // SENTENCIA → DECL NEWLINE
-}
+    // Analiza: TIPO ID [= EXPR] NEWLINE
+    // Tambien es llamado por parsearDeclaracionConst despues de consumir "const"
+    private void parsearDeclaracion() {
+        desplazar();   // desplazar a int/float/double/string/bool
+        reducirTipo(); // REDUCIR int/float/double/string/bool → TIPO
+
+        if (!es(TokenType.ID)) {
+            // después del tipo debe venir un nombre de variable
+            registrarError("se esperaba identificador", actual());
+            yaRecupero = true;
+            reducir(GRAMATICA.get(18));
+            consumirNewline();
+            reducir(GRAMATICA.get(4));
+            return;
+        }
+        desplazar(); // desplazar ID
+
+        if (es(TokenType.IGUAL)) {
+            desplazar();       // desplazar =
+            parsearExpresion(); // analiza el valor
+            reducir(GRAMATICA.get(17)); // DECL → TIPO ID = EXPR
+        } else {
+            reducir(GRAMATICA.get(18)); // DECL → TIPO ID
+        }
+
+        consumirNewline(); // una sola vez, fuera del if/else
+        reducir(GRAMATICA.get(4)); // SENTENCIA → DECL NEWLINE
+    }
 
     private void reducirTipo() {
         switch (pila.peek().getToken().getTipo()) {
             case INT:    reducir(GRAMATICA.get(13)); break; //hace reduccion a la produccion 13
             case FLOAT:  reducir(GRAMATICA.get(14)); break; //hace reduccion a la produccion 14
-            case STRING: reducir(GRAMATICA.get(15)); break;//hace reduccion a la produccion 15
+            case DOUBLE: reducir(GRAMATICA.get(14)); break; //DOUBLE se reduce igual que FLOAT (P14)
+            case STRING: reducir(GRAMATICA.get(15)); break; //hace reduccion a la produccion 15
             default:     reducir(GRAMATICA.get(16)); break; //hace reduccion a la produccion 16
         }
     }
 
-
     private void parsearAsignacionOLlamada() {
-        desplazar(); //desplazar id 
+        desplazar(); //desplazar id
 
         if (es(TokenType.IGUAL)) {
-            //asignacion nombreVar = expresion 
+            //asignacion nombreVar = expresion
             desplazar();
             parsearExpresion();
             reducir(GRAMATICA.get(19)); //hace reduccion a la produccion 19
@@ -415,8 +439,8 @@ public class AnalizadorAscendente {
                 desplazar();
                 reducir(GRAMATICA.get(21)); //hace reduccion a la produccion 21
             } else {
-                parsearListaArgumentos(); //analiza lo que tenemos 
-                //si no se cerro parentesis marca ese error 
+                parsearListaArgumentos(); //analiza lo que tenemos
+                //si no se cerro parentesis marca ese error
                 esperarYDesplazar(TokenType.PAREND, "se esperaba ')'");
                 reducir(GRAMATICA.get(20));
             }
@@ -431,18 +455,17 @@ public class AnalizadorAscendente {
         }
     }
 
-
     private void parsearIf() {
-        desplazar(); //desplazar a if   
+        desplazar(); //desplazar a if
         parsearExpresion();
-        esperarYDesplazar(TokenType.DOSP,    "se esperaba ':'"); 
+        esperarYDesplazar(TokenType.DOSP,    "se esperaba ':'");
         esperarYDesplazar(TokenType.NEWLINE, "se esperaba nueva línea tras ':'");
         parsearBloque();
 
         if (es(TokenType.ELSE)) {
             //desplazar a else
             desplazar();
-            //errores 
+            //errores
             esperarYDesplazar(TokenType.DOSP,    "se esperaba ':' después de else");
             esperarYDesplazar(TokenType.NEWLINE, "se esperaba nueva línea tras else:");
             parsearBloque();
@@ -452,26 +475,26 @@ public class AnalizadorAscendente {
         }
         reducir(GRAMATICA.get(7)); //hace reduccion a la produccion 7
     }
- 
+
     private void parsearWhile() {
-        desplazar(); //desplazar a while 
-        parsearExpresion(); //condicion del while 
-        //errores 
+        desplazar(); //desplazar a while
+        parsearExpresion(); //condicion del while
+        //errores
         esperarYDesplazar(TokenType.DOSP,    "se esperaba ':'");
         esperarYDesplazar(TokenType.NEWLINE, "se esperaba nueva línea tras ':'");
-        parsearBloque(); //cuerpo del while 
+        parsearBloque(); //cuerpo del while
         reducir(GRAMATICA.get(24)); //hace reduccion a la produccion 24
-        reducir(GRAMATICA.get(8)); //hace reduccion a la produccion 8
+        reducir(GRAMATICA.get(8));  //hace reduccion a la produccion 8
     }
 
     private void parsearDefinicionFuncion() {
-        desplazar(); //desplazar a funcion 
+        desplazar(); //desplazar a funcion
         //errores
         esperarYDesplazar(TokenType.ID,     "se esperaba nombre de función");
         esperarYDesplazar(TokenType.PARENI, "se esperaba '('");
 
         if (es(TokenType.PAREND)) {
-            desplazar(); // desplazar ) 
+            desplazar(); // desplazar )
             esperarYDesplazar(TokenType.DOSP,    "se esperaba ':'");
             esperarYDesplazar(TokenType.NEWLINE, "se esperaba nueva línea");
             parsearBloque();
@@ -489,7 +512,7 @@ public class AnalizadorAscendente {
     }
 
     private void parsearReturn() {
-        desplazar(); //desplazar a return 
+        desplazar(); //desplazar a return
         if (esInicioExpresion()) {
             parsearExpresion();
             reducir(GRAMATICA.get(27)); //hace reduccion a la produccion 27
@@ -510,11 +533,10 @@ public class AnalizadorAscendente {
         reducir(GRAMATICA.get(11)); //hace reduccion a la produccion 11
     }
 
-
     private void parsearWrite() {
         desplazar(); //desplazar write
         esperarYDesplazar(TokenType.PARENI, "se esperaba '('");
-        parsearListaArgumentos(); //acepta cualquier expresion 
+        parsearListaArgumentos(); //acepta cualquier expresion
         esperarYDesplazar(TokenType.PAREND, "se esperaba ')'");
         reducir(GRAMATICA.get(30)); //hace reduccion a la produccion 30
         consumirNewline();
@@ -522,7 +544,6 @@ public class AnalizadorAscendente {
     }
 
     private void parsearBloque() {
-
         if (!es(TokenType.INDENT)) {
             //tira error donde deberia haber una identacion
             registrarError("se esperaba bloque indentado", actual());
@@ -530,7 +551,7 @@ public class AnalizadorAscendente {
             return;
         }
         desplazar(); // desplazar a indent
-        parsearListaSentencias(); //analiza el contenido del bloque 
+        parsearListaSentencias(); //analiza el contenido del bloque
         if (!es(TokenType.DEDENT)) {
             registrarError("se esperaba fin del bloque (DEDENT)", actual());
         } else {
@@ -540,38 +561,36 @@ public class AnalizadorAscendente {
     }
 
     private void parsearListaParametros() {
-        parsearParametro(); //primer parametro 
+        parsearParametro(); //primer parametro
         reducir(GRAMATICA.get(33)); //hace reduccion a la produccion 33
 
-        while (es(TokenType.COMA)) { //si hay una coma puede haber mas  parametros
-        //
-            desplazar(); //desplazar a , 
+        while (es(TokenType.COMA)) { //si hay una coma puede haber mas parametros
+            desplazar(); //desplazar a ,
             parsearParametro();
-            reducir(GRAMATICA.get(32));//hace reduccion a la produccion 32
+            reducir(GRAMATICA.get(32)); //hace reduccion a la produccion 32
         }
     }
 
     private void parsearParametro() {
         if (!esTipo(actual().getTipo())) {
-            //si no detecta el tipo de parametro tira error 
+            //si no detecta el tipo de parametro tira error
             registrarError("se esperaba tipo en el parámetro", actual());
             pila.push(new SimboloPila("PARAM"));
             return;
         }
-        desplazar(); // desplazar tipo
-        reducirTipo(); // REDUCIR int/float/string/bool - TIPO
+        desplazar();   // desplazar tipo
+        reducirTipo(); // REDUCIR int/float/double/string/bool → TIPO
         esperarYDesplazar(TokenType.ID, "se esperaba nombre de parámetro");
         reducir(GRAMATICA.get(34)); //hace reduccion a la produccion 34
     }
 
-
     private void parsearListaArgumentos() {
         if (!esInicioExpresion()) {
-            //si no hay ninguna expresion la lista esta vacia 
+            //si no hay ninguna expresion la lista esta vacia
             pila.push(new SimboloPila("LISTA_ARGS"));
             return;
         }
-        parsearExpresion(); //primer argumento 
+        parsearExpresion(); //primer argumento
         reducir(GRAMATICA.get(36)); //hace reduccion a la produccion 36
 
         while (es(TokenType.COMA)) {
@@ -600,8 +619,8 @@ public class AnalizadorAscendente {
             if (esperaOperando) {
 
                 if (t.getTipo() == TokenType.NOT) {
-                    desplazar(); // desplazar not 
-                    pilaOps.push("NOT");  // va a la pila de las operaciones 
+                    desplazar(); // desplazar not
+                    pilaOps.push("NOT"); // va a la pila de las operaciones
 
                 } else if (t.getTipo() == TokenType.RESTA) {
                     desplazar(); //desplazar -
@@ -617,7 +636,7 @@ public class AnalizadorAscendente {
                             && siguiente().getTipo() == TokenType.PARENI) {
                         parsearLlamadaEnExpresion(); // si es ID( es una llamada a función
                     } else {
-                        desplazar();   // si es valor simple, solo se desplaza
+                        desplazar();  // si es valor simple, solo se desplaza
                         aplicarReduccionOperando(t.getTipo());
                     }
                     numOperandos++;
@@ -631,7 +650,7 @@ public class AnalizadorAscendente {
 
                 } else {
                     if (!yaRecupero) {
-                        registrarError("expresión inválida", t); //se detecta token inseperado
+                        registrarError("expresión inválida", t); //se detecta token inesperado
                         yaRecupero = true;
                     }
                     break;
@@ -645,12 +664,12 @@ public class AnalizadorAscendente {
                         numOperandos--;
                     }
                     if (!pilaOps.isEmpty()) pilaOps.pop(); // saca el PARENI
-                    desplazar(); //desplazar ) 
+                    desplazar(); //desplazar )
                     reducirProduccion(51); //hace la reduccion a la produccion 51
 
                 } else if (PRECEDENCIA.containsKey(tipo)) {
-                     // es un operador binario como + - * / == etc.
-                // antes de meter este operador,  se reduce los del tope que tengan más precedencia
+                    // es un operador binario como + - * / == etc.
+                    // antes de meter este operador, se reduce los del tope que tengan más precedencia
                     while (!pilaOps.isEmpty()
                             && !pilaOps.peek().equals("PARENI")
                             && !pilaOps.peek().equals("NOT")
@@ -661,14 +680,14 @@ public class AnalizadorAscendente {
                         boolean reducir  = (precTope > precActual) // tope tiene más precedencia
                                 || (precTope == precActual && !ASOC_DERECHA.contains(tipo)); // igual y asocia izquierda
                         if (reducir) {
-                            reducirOperadorBinario(pilaOps.pop()); // REDUCIR operador del tope 
+                            reducirOperadorBinario(pilaOps.pop()); // REDUCIR operador del tope
                             numOperandos--;
                         } else {
                             break;
                         }
                     }
                     pilaOps.push(tipo); // meter el operador actual a la pila
-                    desplazar(); //desplazar el operador 
+                    desplazar(); //desplazar el operador
                     esperaOperando = true; // se espera el operando derecho
 
                 } else {
@@ -680,7 +699,7 @@ public class AnalizadorAscendente {
         while (!pilaOps.isEmpty()) {
             String op = pilaOps.pop();
             if (op.equals("PARENI")) {
-                registrarError("paréntesis sin cerrar", actual()); // no se cerro el parentesis 
+                registrarError("paréntesis sin cerrar", actual()); // no se cerro el parentesis
             } else if (op.equals("NOT") || op.equals("UNARIO")) {
                 aplicarOperadorUnario(op);
             } else {
@@ -689,7 +708,7 @@ public class AnalizadorAscendente {
             }
         }
 
-        pila.push(new SimboloPila("EXPR"));  // resultado final en la pila principal
+        pila.push(new SimboloPila("EXPR")); // resultado final en la pila principal
     }
 
     private void parsearLlamadaEnExpresion() {
@@ -698,7 +717,7 @@ public class AnalizadorAscendente {
 
         if (es(TokenType.PAREND)) {
             desplazar();
-            reducirProduccion(53); // hacer la reduccion por la produccion 53 
+            reducirProduccion(53); // hacer la reduccion por la produccion 53
         } else {
             parsearListaArgumentos();
             esperarYDesplazar(TokenType.PAREND, "se esperaba ')'");
@@ -708,7 +727,7 @@ public class AnalizadorAscendente {
 
     private void aplicarReduccionOperando(TokenType tipo) {
         switch (tipo) {
-            //reducciones finales de los operadores 
+            //reducciones finales de los operadores
             case ID:           reducirProduccion(54); break;
             case NUMENTERO:    reducirProduccion(55); break;
             case NUMDECIMAL:   reducirProduccion(56); break;
@@ -728,7 +747,7 @@ public class AnalizadorAscendente {
 
     private void reducirOperadorBinario(String op) {
         switch (op) {
-            //reduccion final de los demas operadores 
+            //reduccion final de los demas operadores
             case "OR":       reducirProduccion(37); break;
             case "AND":      reducirProduccion(38); break;
             case "MAYORQ":   reducirProduccion(40); break;
@@ -746,13 +765,13 @@ public class AnalizadorAscendente {
 
     private void reducirProduccion(int numero) {
         reducir(GRAMATICA.get(numero));
-   }
+    }
 
     private boolean esOperandoSimple(TokenType t) {
-          // estos son todos los tipos que pueden ser un operando directo
-        return t == TokenType.ID       || t == TokenType.NUMENTERO
+        // estos son todos los tipos que pueden ser un operando directo
+        return t == TokenType.ID         || t == TokenType.NUMENTERO
             || t == TokenType.NUMDECIMAL || t == TokenType.CADENASTRING
-            || t == TokenType.TRUE     || t == TokenType.FALSE;
+            || t == TokenType.TRUE       || t == TokenType.FALSE;
     }
 
     private boolean pilaContienePareni(Deque<String> pilaOps) {
@@ -760,4 +779,3 @@ public class AnalizadorAscendente {
         return false;
     }
 }
- 

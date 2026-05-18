@@ -54,8 +54,7 @@ public class TablaSimbolos {
      */
     public void cerrarScope() {
         if (pilaScopes.size() > 1) {
-            pilaScopes.pop(); // elimina el scope más interno
-            // el scope activo regresa al anterior
+            pilaScopes.pop();
             scopeActual = (pilaScopes.size() == 1) ? "global" : scopeActual;
         }
     }
@@ -72,7 +71,7 @@ public class TablaSimbolos {
             return false; // ya declarado en este scope → error semántico
         }
         scopeTop.put(entrada.getNombre(), entrada);
-        historial.add(entrada);   // se guarda en el historial para el archivo de salida
+        historial.add(entrada); // se guarda en el historial para el archivo de salida
         return true;
     }
 
@@ -83,20 +82,16 @@ public class TablaSimbolos {
      * Devuelve null si no existe (variable no declarada).
      */
     public EntradaTabla buscar(String nombre) {
-        // Recorre la pila desde el tope (scope local) hacia el fondo (global)
         for (Map<String, EntradaTabla> scope : pilaScopes) {
-            if (scope.containsKey(nombre)) {
-                return scope.get(nombre);
-            }
+            if (scope.containsKey(nombre)) return scope.get(nombre);
         }
-        return null; // no encontrado
+        return null;
     }
 
     // ── Actualización de valor ─────────────────────────────────────────────
 
     /**
      * Actualiza el valor almacenado de un símbolo ya declarado.
-     * Se usa cuando el semántico evalúa una asignación.
      */
     public boolean asignarValor(String nombre, Object valor) {
         EntradaTabla entrada = buscar(nombre);
@@ -105,42 +100,40 @@ public class TablaSimbolos {
         return true;
     }
 
-    // ── Getters de utilidad ────────────────────────────────────────────────
-
-    /** Devuelve el nombre del scope activo. */
     public String getScopeActual() { return scopeActual; }
 
     // ── Escritura del archivo de salida ────────────────────────────────────
 
     /**
      * Escribe el historial completo de la tabla en el archivo .sym.
-     * Se llama al final del análisis semántico.
-     * Formato: encabezado + una fila por cada símbolo.
+     * Formato minimalista: solo encabezado de columnas, filas y total.
      */
     public void escribirArchivo() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
-            // ── Encabezado ──────────────────────────────────────────────────
-            String separador = "=".repeat(90);
-            bw.write(separador); bw.newLine();
-            bw.write(String.format("  TABLA DE SÍMBOLOS — MiniLang%n"));
-            bw.write(separador); bw.newLine();
-            bw.write(String.format("%-20s %-8s %-12s %-12s %-20s %s%n",
-                    "NOMBRE", "TIPO", "CATEGORÍA", "SCOPE", "VALOR", "LÍNEA"));
-            bw.write("-".repeat(90)); bw.newLine();
 
-            // ── Filas ────────────────────────────────────────────────────────
+            // ── Encabezado de columnas ───────────────────────────────────
+            bw.write(String.format("%-20s %-8s %-12s %-12s %-20s %s",
+                    "NOMBRE", "TIPO", "CATEGORIA", "AMBITO", "VALOR", "LINEA"));
+            bw.newLine();
+            bw.write("-".repeat(80));
+            bw.newLine();
+
+            // ── Filas ────────────────────────────────────────────────────
             for (EntradaTabla e : historial) {
                 bw.write(e.toString());
                 bw.newLine();
             }
 
-            bw.write(separador); bw.newLine();
-            bw.write("Total de símbolos: " + historial.size()); bw.newLine();
+            // ── Total ────────────────────────────────────────────────────
+            bw.write("-".repeat(80));
+            bw.newLine();
+            bw.write("Total: " + historial.size() + " simbolos");
+            bw.newLine();
 
-            System.out.println("Tabla de símbolos guardada en: " + rutaSalida);
+            System.out.println("Tabla de simbolos guardada en: " + rutaSalida);
 
         } catch (IOException ex) {
-            System.out.println("Error al escribir tabla de símbolos: " + ex.getMessage());
+            System.out.println("Error al escribir tabla de simbolos: " + ex.getMessage());
         }
     }
 }

@@ -1,0 +1,9 @@
+const int MAYORIA = 18
+int edad
+string resultado
+read(edad)
+if edad >= MAYORIA:
+    write("Eres mayor de edad")
+else:
+    write("Eres menor de edad")
+write("Fin del programa")

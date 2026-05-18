@@ -1,0 +1,11 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+FACTOR               DOUBLE   CONSTANTE    global       1.5                  línea 1
+salario              INT      PARAMETRO    calcularBono -                    línea 3
+factor               DOUBLE   PARAMETRO    calcularBono -                    línea 3
+calcularBono         VOID     FUNCION      global       params=[INT, DOUBLE] línea 3
+bono                 DOUBLE   VARIABLE     calcularBono -                    línea 4
+salarioBase          INT      VARIABLE     global       5000                 línea 7
+bonificacion         DOUBLE   VARIABLE     global       7500.0               línea 8
+--------------------------------------------------------------------------------
+Total: 7 simbolos

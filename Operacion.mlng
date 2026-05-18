@@ -1,0 +1,14 @@
+const int BASE = 10
+const double PI = 3.1416
+double radio = 5.0
+int b = 3
+double area = PI * radio * radio
+int suma = BASE + b
+int resta = BASE - b
+int producto = BASE * b
+int division = BASE / b
+write(suma)
+write(resta)
+write(producto)
+write(division)
+write(area)

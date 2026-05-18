@@ -1,0 +1,11 @@
+const double FACTOR = 1.5
+
+funcion calcularBono(int salario, double factor):
+    double bono = salario * factor
+    return bono
+
+int salarioBase = 5000
+double bonificacion = salarioBase * FACTOR
+calcularBono(salarioBase, FACTOR)
+write("Calculo completado")
+write(bonificacion)

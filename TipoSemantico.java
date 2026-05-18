@@ -1,23 +1,29 @@
 /**
  * Representa los tipos de dato que maneja MiniLang.
  * Se usa en la tabla de símbolos y en la comprobación de tipos.
+ *
+ * DOUBLE es un alias de FLOAT: internamente se tratan igual,
+ * pero se distinguen en la tabla de símbolos para mostrar el tipo
+ * exacto que el programador escribió.
  */
 public enum TipoSemantico {
     INT,        // número entero
-    FLOAT,      // número decimal (en MiniLang se llama float)
+    FLOAT,      // número decimal declarado con "float"
+    DOUBLE,     // número decimal declarado con "double" (mismo comportamiento que FLOAT)
     STRING,     // cadena de texto
     BOOL,       // valor booleano (true / false)
-    VOID,       // sin valor de retorno (funciones void)
+    VOID,       // sin valor de retorno (funciones)
     ERROR;      // tipo inválido, resultado de una operación incorrecta
 
     /**
-     * Convierte el nombre del TokenType al TipoSemantico correspondiente.
-     * Por ejemplo "INT" → INT, "FLOAT" → FLOAT.
+     * Convierte el nombre de un TokenType al TipoSemantico correspondiente.
+     * "DOUBLE" y "FLOAT" mapean a sus respectivos valores del enum.
      */
     public static TipoSemantico desdeCadena(String nombre) {
         switch (nombre.toUpperCase()) {
             case "INT":    return INT;
             case "FLOAT":  return FLOAT;
+            case "DOUBLE": return DOUBLE;
             case "STRING": return STRING;
             case "BOOL":   return BOOL;
             case "VOID":   return VOID;
@@ -26,37 +32,59 @@ public enum TipoSemantico {
     }
 
     /**
-     * Devuelve true si este tipo puede convertirse (coerción implícita) al tipo destino.
-     * La única coerción permitida es int → float.
-     * Ejemplo: asignar un int a una variable float es válido.
+     * Devuelve true si este tipo es numérico decimal (float o double).
+     * Se usa para unificar ambos en operaciones aritméticas.
+     */
+    public boolean esDecimal() {
+        return this == FLOAT || this == DOUBLE;
+    }
+
+    /**
+     * Devuelve true si este tipo puede convertirse implícitamente al tipo destino.
+     * Coerciones permitidas:
+     *   int   → float   (válido)
+     *   int   → double  (válido)
+     *   float → double  (válido)
+     *   double→ float   (válido, mismo nivel)
      */
     public boolean esCompatibleCon(TipoSemantico destino) {
-        if (this == destino)        return true;   // mismo tipo, siempre compatible
-        if (this == INT && destino == FLOAT) return true;  // int cabe en float
+        if (this == destino) return true;
+        // int puede ir a cualquier tipo decimal
+        if (this == INT && destino.esDecimal()) return true;
+        // float y double son intercambiables entre sí
+        if (this.esDecimal() && destino.esDecimal()) return true;
         return false;
     }
 
     /**
      * Dado dos tipos en una operación aritmética, devuelve el tipo resultante.
-     * Si uno es float y el otro int, el resultado es float (promoción).
-     * Si los tipos no son compatibles aritméticamente, devuelve ERROR.
+     * Reglas:
+     *   int   op int    → int
+     *   int   op float  → float
+     *   int   op double → double
+     *   float op double → double
+     *   cualquier otro  → ERROR
      */
     public static TipoSemantico resultadoAritmetico(TipoSemantico a, TipoSemantico b) {
         if (a == ERROR || b == ERROR) return ERROR;
-        if ((a == INT || a == FLOAT) && (b == INT || b == FLOAT)) {
-            // si alguno es float, el resultado es float
-            return (a == FLOAT || b == FLOAT) ? FLOAT : INT;
-        }
-        return ERROR; // string, bool, etc. no soportan aritmética
+        boolean aNum = (a == INT || a.esDecimal());
+        boolean bNum = (b == INT || b.esDecimal());
+        if (!aNum || !bNum) return ERROR; // string, bool, etc. no soportan aritmética
+
+        // Si alguno es DOUBLE, el resultado es DOUBLE
+        if (a == DOUBLE || b == DOUBLE) return DOUBLE;
+        // Si alguno es FLOAT, el resultado es FLOAT
+        if (a == FLOAT  || b == FLOAT)  return FLOAT;
+        // Ambos INT
+        return INT;
     }
 
     /**
      * Devuelve el tipo resultante de una comparación (>, <, ==, etc.).
-     * El resultado siempre es BOOL si los operandos son numéricos o del mismo tipo.
+     * El resultado siempre es BOOL si los operandos son compatibles entre sí.
      */
     public static TipoSemantico resultadoComparacion(TipoSemantico a, TipoSemantico b) {
         if (a == ERROR || b == ERROR) return ERROR;
-        // se puede comparar numéricos entre sí (con coerción) o mismo tipo
         if (a.esCompatibleCon(b) || b.esCompatibleCon(a)) return BOOL;
         return ERROR;
     }

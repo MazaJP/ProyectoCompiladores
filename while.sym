@@ -1,0 +1,8 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+LIMITE               INT      CONSTANTE    global       5                    línea 1
+INCREMENTO           DOUBLE   CONSTANTE    global       1.5                  línea 2
+contador             INT      VARIABLE     global       1                    línea 3
+acumulado            DOUBLE   VARIABLE     global       1.5                  línea 4
+--------------------------------------------------------------------------------
+Total: 4 simbolos

@@ -1,0 +1,7 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+MAYORIA              INT      CONSTANTE    global       18                   línea 1
+edad                 INT      VARIABLE     global       -                    línea 2
+resultado            STRING   VARIABLE     global       -                    línea 3
+--------------------------------------------------------------------------------
+Total: 3 simbolos

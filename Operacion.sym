@@ -1,0 +1,13 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+BASE                 INT      CONSTANTE    global       10                   línea 1
+PI                   DOUBLE   CONSTANTE    global       3.1416               línea 2
+radio                DOUBLE   VARIABLE     global       5.0                  línea 3
+b                    INT      VARIABLE     global       3                    línea 4
+area                 DOUBLE   VARIABLE     global       78.54                línea 5
+suma                 INT      VARIABLE     global       13                   línea 6
+resta                INT      VARIABLE     global       7                    línea 7
+producto             INT      VARIABLE     global       30                   línea 8
+division             INT      VARIABLE     global       3                    línea 9
+--------------------------------------------------------------------------------
+Total: 9 simbolos
