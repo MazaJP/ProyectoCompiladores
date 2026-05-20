@@ -1,0 +1,6 @@
+const int TOPE = 10
+double x = 3.5
+if x < TOPE
+    write("x es menor")
+else:
+    write("x supera el tope")

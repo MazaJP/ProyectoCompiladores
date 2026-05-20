@@ -1,0 +1,34 @@
+(1, 1-5) CONST const
+(1, 7-9) INT int
+(1, 11-14) ID TOPE
+(1, 16-16) IGUAL =
+(1, 18-19) NUMENTERO 10
+(1, 1-1) NEWLINE \n
+(2, 1-6) DOUBLE double
+(2, 8-8) ID x
+(2, 10-10) IGUAL =
+(2, 12-14) NUMDECIMAL 3.5
+(2, 1-1) NEWLINE \n
+(3, 1-2) IF if
+(3, 4-4) ID x
+(3, 6-6) MENORQ <
+(3, 8-11) ID TOPE
+(3, 1-1) NEWLINE \n
+(4, 1-1) INDENT
+(4, 5-9) WRITE write
+(4, 10-10) PARENI (
+(4, 11-22) CADENASTRING x es menor
+(4, 23-23) PAREND )
+(4, 1-1) NEWLINE \n
+(5, 1-1) DEDENT
+(5, 1-4) ELSE else
+(5, 5-5) DOSP :
+(5, 1-1) NEWLINE \n
+(6, 1-1) INDENT
+(6, 5-9) WRITE write
+(6, 10-10) PARENI (
+(6, 11-28) CADENASTRING x supera el tope
+(6, 29-29) PAREND )
+(6, 1-1) NEWLINE \n
+(7, 1-1) DEDENT
+(7, 1-1) EOF $

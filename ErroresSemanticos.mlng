@@ -1,0 +1,11 @@
+const int MAXIMO = 50
+const double TASA = 0.15
+int cantidad = 10
+string etiqueta = "producto"
+double total = cantidad * TASA
+int resultado = cantidad + etiqueta
+bool activo = true
+double calculo = activo + TASA
+MAXIMO = 999
+z = 100
+write(total)

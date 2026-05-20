@@ -1,0 +1,4 @@
+const int MAX = 100
+double precio = 9.99@5
+int cantidad = 3
+write(precio)
