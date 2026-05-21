@@ -1,11 +1,20 @@
-const int MAXIMO = 50
-const double TASA = 0.15
+const int MAXIMO = 100
+const double TASA = 0.18
+const string MONEDA = "USD"
 int cantidad = 10
+int precio = 50
 string etiqueta = "producto"
 double total = cantidad * TASA
-int resultado = cantidad + etiqueta
+double subtotal = precio * cantidad
 bool activo = true
+bool verificado = false
+int resultado = cantidad + etiqueta
 double calculo = activo + TASA
+double operacion = etiqueta * precio
+bool logico = total and cantidad
 MAXIMO = 999
+TASA = 0.25
 z = 100
 write(total)
+write(subtotal)
+write(resultado)

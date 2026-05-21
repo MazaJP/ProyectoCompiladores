@@ -16,6 +16,7 @@ import java.util.*;
 public class Lexer {
 
     private final String rutaEntrada;
+    //
     private boolean hayErrores = false;
     private final Stack<Integer> pilaIndentacion = new Stack<>();
     private final List<Token> tokens = new ArrayList<>();
@@ -54,7 +55,6 @@ public class Lexer {
                 numeroLinea++;
                 int i = 0;
 
-                // ── Manejo de comentarios de bloque /* ... */ ─────────────
                 if (enComentarioBloque) {
                     int cierre = linea.indexOf("*/");
                     if (cierre >= 0) {
@@ -127,6 +127,7 @@ public class Lexer {
                             sb.append(linea.charAt(i++));
                             columna++;
                         }
+                        //Errores fase 1
                         if (!cerrada) {
                             System.out.println("line " + numeroLinea + ", col " + inicio +
                                     ": ERROR cadena sin cerrar");

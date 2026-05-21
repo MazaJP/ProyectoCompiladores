@@ -161,6 +161,7 @@ public class AnalizadorAscendente {
     private int pos;
     //push pop
     private final Deque<SimboloPila> pila = new ArrayDeque<>();
+    //Guardamos los errores
     private final List<String> errores    = new ArrayList<>();
 
     //se acumulan los errores
@@ -233,7 +234,7 @@ public class AnalizadorAscendente {
         }
     }
 
-    //Formatea el mensaje de error con la ubicación exacta y lo agrega a la lista sin detener
+    //manejo errores fase 2
     private void registrarError(String mensaje, Token t) {
         String simbolo;
         if (t.getTipo() == TokenType.NEWLINE || t.getTipo() == TokenType.EOF) {

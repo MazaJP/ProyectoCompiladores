@@ -2,129 +2,103 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Tabla de símbolos con soporte de scopes anidados (global → función → bloque).
- *
- * Internamente usa una pila de mapas: cada nivel de la pila es un scope.
+ * Internamente usa una pila de mapas: cada nivel de la pila es un ambito.
  * Al entrar a una función/bloque se hace push, al salir se hace pop.
- * La búsqueda siempre busca desde el tope hacia el fondo (scope más local primero).
+ * La búsqueda siempre busca desde el tope hacia el fondo
  *
  * Al final del análisis, toda la tabla acumulada se escribe en un archivo .sym.
  */
 public class TablaSimbolos {
 
-    // ── Estructura interna ─────────────────────────────────────────────────
-
-    // Cada elemento de la pila es el scope actual con sus símbolos
+    //pila para para los ambitos
     private final Deque<Map<String, EntradaTabla>> pilaScopes = new ArrayDeque<>();
 
-    // Historial completo de entradas (para escribir el archivo de salida)
+    // Guardamos todos los simbolos que son declarados 
     private final List<EntradaTabla> historial = new ArrayList<>();
 
-    // Nombre del scope activo (se actualiza al entrar/salir de funciones)
+    // Nombre de ambito por defautl global
     private String scopeActual = "global";
 
     // Ruta del archivo de salida para la tabla
     private final String rutaSalida;
 
-    // ── Constructor ────────────────────────────────────────────────────────
+    // creacion de la tabla .sym
     public TablaSimbolos(String rutaEntrada) {
         // El archivo de tabla se guarda con extensión .sym junto al .mlng
         this.rutaSalida = rutaEntrada.endsWith(".mlng")
                 ? rutaEntrada.substring(0, rutaEntrada.length() - 5) + ".sym"
                 : rutaEntrada + ".sym";
 
-        // Abrir el scope global al construir la tabla
+        // Abrir el ambito global donde se guardan las variables globales
         abrirScope("global");
     }
 
-    // ── Gestión de scopes ──────────────────────────────────────────────────
-
-    /**
-     * Abre un nuevo scope (al entrar a una función o bloque).
-     * Se hace push de un mapa vacío en la pila.
-     */
+  
+      //Abre un nuevo ambito al entrar a una función o bloque
+     //Se hace push de un mapa vacío en la pila.
+     //mantenideo el orden en el que se fueron metiendo
     public void abrirScope(String nombre) {
         scopeActual = nombre;
         pilaScopes.push(new LinkedHashMap<>());
     }
 
-    /**
-     * Cierra el scope actual (al salir de una función o bloque).
-     * Los símbolos del scope cerrado quedan en el historial pero ya no son accesibles.
-     */
+     //Cierra el scope actual al salir de una función o bloque
+     //Los símbolos del ambito cerrado quedan en el historial pero ya no son accesibles.
+
     public void cerrarScope() {
+        //no sacamos el ambito global
         if (pilaScopes.size() > 1) {
+            //sacamos cada ""cajon"guardando tadas las variable en el historial 
             pilaScopes.pop();
             scopeActual = (pilaScopes.size() == 1) ? "global" : scopeActual;
         }
     }
 
-    // ── Inserción ──────────────────────────────────────────────────────────
 
-    /**
-     * Declara un nuevo símbolo en el scope actual.
-     * Devuelve false si ya existe (declaración duplicada en el mismo scope).
-     */
+    //Revisamos si el nuevo ambito no tiene el mismo nombre que el anterior
     public boolean declarar(EntradaTabla entrada) {
         Map<String, EntradaTabla> scopeTop = pilaScopes.peek();
         if (scopeTop.containsKey(entrada.getNombre())) {
-            return false; // ya declarado en este scope → error semántico
+            return false; // ya declarado en este ambito da falso
         }
+        //agrega el nuevo ambito lo agrega y lo que este tiene
         scopeTop.put(entrada.getNombre(), entrada);
         historial.add(entrada); // se guarda en el historial para el archivo de salida
         return true;
     }
-
-    // ── Búsqueda ───────────────────────────────────────────────────────────
-
-    /**
-     * Busca un símbolo recorriendo los scopes de más interno a más externo.
-     * Devuelve null si no existe (variable no declarada).
-     */
+    //Busca el ambito dentro de la pila hasta encontrarlo 
     public EntradaTabla buscar(String nombre) {
         for (Map<String, EntradaTabla> scope : pilaScopes) {
             if (scope.containsKey(nombre)) return scope.get(nombre);
         }
         return null;
     }
-
-    // ── Actualización de valor ─────────────────────────────────────────────
-
-    /**
-     * Actualiza el valor almacenado de un símbolo ya declarado.
-     */
+    //calcula el valor de una expresion para guardarlo en la tabla 
     public boolean asignarValor(String nombre, Object valor) {
         EntradaTabla entrada = buscar(nombre);
         if (entrada == null) return false;
         entrada.setValor(valor);
         return true;
     }
-
+    // saber en que ambito estamos
     public String getScopeActual() { return scopeActual; }
-
-    // ── Escritura del archivo de salida ────────────────────────────────────
-
-    /**
-     * Escribe el historial completo de la tabla en el archivo .sym.
-     * Formato minimalista: solo encabezado de columnas, filas y total.
-     */
+ 
+     //Escribe el historial completo de la tabla en el archivo .sym.
+     //agarra lo que esta en la tabla
     public void escribirArchivo() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaSalida))) {
 
-            // ── Encabezado de columnas ───────────────────────────────────
             bw.write(String.format("%-20s %-8s %-12s %-12s %-20s %s",
                     "NOMBRE", "TIPO", "CATEGORIA", "AMBITO", "VALOR", "LINEA"));
             bw.newLine();
             bw.write("-".repeat(80));
             bw.newLine();
 
-            // ── Filas ────────────────────────────────────────────────────
             for (EntradaTabla e : historial) {
                 bw.write(e.toString());
                 bw.newLine();
             }
 
-            // ── Total ────────────────────────────────────────────────────
             bw.write("-".repeat(80));
             bw.newLine();
             bw.write("Total: " + historial.size() + " simbolos");

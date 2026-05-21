@@ -1,0 +1,30 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+MAX                  INT      CONSTANTE    global       100                  línea 2
+precio               DOUBLE   VARIABLE     global       50.0                 línea 3
+cantidad             INT      VARIABLE     global       10                   línea 4
+TOPE                 INT      CONSTANTE    global       10                   línea 8
+LIMITE               DOUBLE   CONSTANTE    global       5.5                  línea 9
+x                    DOUBLE   VARIABLE     global       3.5                  línea 10
+y                    INT      VARIABLE     global       19                   línea 11
+z                    INT      VARIABLE     global       100                  línea 12
+activo               BOOL     VARIABLE     global       false                línea 13
+a                    INT      PARAMETRO    calcular     -                    línea 31
+b                    INT      PARAMETRO    calcular     -                    línea 31
+calcular             VOID     FUNCION      global       params=[INT, INT]    línea 31
+estado               BOOL     PARAMETRO    verificar    -                    línea 34
+valor                DOUBLE   PARAMETRO    verificar    -                    línea 34
+verificar            VOID     FUNCION      global       params=[BOOL, DOUBLE, INT] línea 34
+MAXIMO               INT      CONSTANTE    global       100                  línea 38
+TASA                 DOUBLE   CONSTANTE    global       0.18                 línea 39
+MONEDA               STRING   CONSTANTE    global       USD                  línea 40
+etiqueta             STRING   VARIABLE     global       producto             línea 43
+total                DOUBLE   VARIABLE     global       1.7999999999999998   línea 44
+subtotal             DOUBLE   VARIABLE     global       500.0                línea 45
+verificado           BOOL     VARIABLE     global       false                línea 47
+resultado            INT      VARIABLE     global       17                   línea 48
+calculo              DOUBLE   VARIABLE     global       0.279                línea 49
+operacion            DOUBLE   VARIABLE     global       450.0                línea 50
+logico               BOOL     VARIABLE     global       false                línea 51
+--------------------------------------------------------------------------------
+Total: 26 simbolos

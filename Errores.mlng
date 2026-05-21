@@ -1,0 +1,55 @@
+#Errores Lexicos
+const int MAX = 100
+double precio = 9.995
+int cantidad = 3
+write(DineroTotal)
+
+#errores Sintacticos
+const int TOPE = 10
+const double LIMITE = 5.5
+double x = 3.5
+int y = 20
+int z = 15
+bool activo = true
+
+if x < TOPE:
+    write("x es menor")
+    if y > z:
+        write("y supera z")
+    else:
+        write("z supera y")
+else:
+    write("x supera el tope")
+
+while y > 0:
+    y = y - 1
+    write(y)
+
+while activo and z > 0:
+    z = z - 1
+
+funcion calcular(int a, int b):
+    return a + b
+
+funcion verificar(bool estado, double valor, int cantidad):
+    return estado
+
+#errores semanticos
+const int MAXIMO = 100
+const double TASA = 0.18
+const string MONEDA = "USD"
+cantidad = 10
+precio = 50
+string etiqueta = "producto"
+double total = cantidad * TASA
+double subtotal = precio * cantidad
+activo = false
+bool verificado = false
+int resultado = cantidad + 7
+double calculo = 0.099 + TASA
+double operacion = 9 * precio
+bool logico = true and activo
+z = 100
+write(total)
+write(subtotal)
+write(resultado)

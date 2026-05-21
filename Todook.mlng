@@ -1,0 +1,62 @@
+# prueba 1
+string texto = "Prueba de texto fase 3 proyecto"
+write(texto)
+
+#Prueba 2
+const int MAYORIA = 18
+int edad
+string resultado
+read(edad)
+if edad >= MAYORIA:
+    write("Eres mayor de edad")
+else:
+    write("Eres menor de edad")
+write("Fin del programa")
+
+#Prueba 3
+const int BASE = 10
+const double PI = 3.1416
+
+funcion calcular(double radio, int b):
+    double area = PI * radio * radio
+    int suma = BASE + b
+    int resta = BASE - b
+    int producto = BASE * b
+    int division = BASE / b
+    if suma > 10:
+        string mensaje = "resultado grande"
+        write(mensaje)
+    return area
+
+double radioValor = 5.0
+int bValor = 3
+calcular(radioValor, bValor)
+
+#Prueba 4
+
+const double FACTOR = 1.5
+
+funcion calcularBono(int salario, double factor):
+    double bono = salario * factor
+    return bono
+
+int salarioBase = 5000
+double bonificacion = salarioBase * FACTOR
+calcularBono(salarioBase, FACTOR)
+write("Calculo completado")
+write(bonificacion)
+
+#Prueba 5
+const int LIMITE = 5
+const double INCREMENTO = 1.5
+int contador = 0
+double acumulado = 0.0
+while contador < LIMITE:
+    acumulado = acumulado + INCREMENTO
+    contador = contador + 1
+    write(contador)
+    write(acumulado)
+write("Contador final:")
+write(contador)
+write("Acumulado final:")
+write(acumulado)

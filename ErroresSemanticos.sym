@@ -1,12 +1,18 @@
 NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
 --------------------------------------------------------------------------------
-MAXIMO               INT      CONSTANTE    global       50                   línea 1
-TASA                 DOUBLE   CONSTANTE    global       0.15                 línea 2
-cantidad             INT      VARIABLE     global       10                   línea 3
-etiqueta             STRING   VARIABLE     global       producto             línea 4
-total                DOUBLE   VARIABLE     global       1.5                  línea 5
-resultado            INT      VARIABLE     global       -                    línea 6
-activo               BOOL     VARIABLE     global       true                 línea 7
-calculo              DOUBLE   VARIABLE     global       -                    línea 8
+MAXIMO               INT      CONSTANTE    global       100                  línea 1
+TASA                 DOUBLE   CONSTANTE    global       0.18                 línea 2
+MONEDA               STRING   CONSTANTE    global       USD                  línea 3
+cantidad             INT      VARIABLE     global       10                   línea 4
+precio               INT      VARIABLE     global       50                   línea 5
+etiqueta             STRING   VARIABLE     global       producto             línea 6
+total                DOUBLE   VARIABLE     global       1.7999999999999998   línea 7
+subtotal             DOUBLE   VARIABLE     global       500.0                línea 8
+activo               BOOL     VARIABLE     global       true                 línea 9
+verificado           BOOL     VARIABLE     global       false                línea 10
+resultado            INT      VARIABLE     global       -                    línea 11
+calculo              DOUBLE   VARIABLE     global       -                    línea 12
+operacion            DOUBLE   VARIABLE     global       -                    línea 13
+logico               BOOL     VARIABLE     global       -                    línea 14
 --------------------------------------------------------------------------------
-Total: 8 simbolos
+Total: 14 simbolos

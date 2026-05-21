@@ -4,31 +4,145 @@
 (1, 16-16) IGUAL =
 (1, 18-19) NUMENTERO 10
 (1, 1-1) NEWLINE \n
-(2, 1-6) DOUBLE double
-(2, 8-8) ID x
-(2, 10-10) IGUAL =
-(2, 12-14) NUMDECIMAL 3.5
+(2, 1-5) CONST const
+(2, 7-12) DOUBLE double
+(2, 14-19) ID LIMITE
+(2, 21-21) IGUAL =
+(2, 23-25) NUMDECIMAL 5.5
 (2, 1-1) NEWLINE \n
-(3, 1-2) IF if
-(3, 4-4) ID x
-(3, 6-6) MENORQ <
-(3, 8-11) ID TOPE
+(3, 1-6) DOUBLE double
+(3, 8-8) ID x
+(3, 10-10) IGUAL =
+(3, 12-14) NUMDECIMAL 3.5
 (3, 1-1) NEWLINE \n
-(4, 1-1) INDENT
-(4, 5-9) WRITE write
-(4, 10-10) PARENI (
-(4, 11-22) CADENASTRING x es menor
-(4, 23-23) PAREND )
+(4, 1-3) INT int
+(4, 5-5) ID y
+(4, 7-7) IGUAL =
+(4, 9-10) NUMENTERO 20
 (4, 1-1) NEWLINE \n
-(5, 1-1) DEDENT
-(5, 1-4) ELSE else
-(5, 5-5) DOSP :
+(5, 1-3) INT int
+(5, 5-5) ID z
+(5, 7-7) IGUAL =
+(5, 9-10) NUMENTERO 15
 (5, 1-1) NEWLINE \n
-(6, 1-1) INDENT
-(6, 5-9) WRITE write
-(6, 10-10) PARENI (
-(6, 11-28) CADENASTRING x supera el tope
-(6, 29-29) PAREND )
+(6, 1-4) BOOL bool
+(6, 6-11) ID activo
+(6, 13-13) IGUAL =
+(6, 15-18) TRUE true
 (6, 1-1) NEWLINE \n
-(7, 1-1) DEDENT
-(7, 1-1) EOF $
+(7, 1-1) NEWLINE \n
+(8, 1-2) IF if
+(8, 4-4) ID x
+(8, 6-6) MENORQ <
+(8, 8-11) ID TOPE
+(8, 1-1) NEWLINE \n
+(9, 1-1) INDENT
+(9, 5-9) WRITE write
+(9, 10-10) PARENI (
+(9, 11-22) CADENASTRING x es menor
+(9, 23-23) PAREND )
+(9, 1-1) NEWLINE \n
+(10, 5-6) IF if
+(10, 8-8) ID y
+(10, 10-10) MAYORQ >
+(10, 12-12) ID z
+(10, 1-1) NEWLINE \n
+(11, 1-1) INDENT
+(11, 9-13) WRITE write
+(11, 14-14) PARENI (
+(11, 15-26) CADENASTRING y supera z
+(11, 27-27) PAREND )
+(11, 1-1) NEWLINE \n
+(12, 1-1) DEDENT
+(12, 5-8) ELSE else
+(12, 9-9) DOSP :
+(12, 1-1) NEWLINE \n
+(13, 1-1) INDENT
+(13, 9-13) WRITE write
+(13, 14-14) PARENI (
+(13, 15-26) CADENASTRING z supera y
+(13, 27-27) PAREND )
+(13, 1-1) NEWLINE \n
+(14, 1-1) DEDENT
+(14, 1-1) DEDENT
+(14, 1-4) ELSE else
+(14, 5-5) DOSP :
+(14, 1-1) NEWLINE \n
+(15, 1-1) INDENT
+(15, 5-9) WRITE write
+(15, 10-10) PARENI (
+(15, 11-28) CADENASTRING x supera el tope
+(15, 29-29) PAREND )
+(15, 1-1) NEWLINE \n
+(16, 1-1) NEWLINE \n
+(17, 1-1) DEDENT
+(17, 1-5) WHILE while
+(17, 7-7) ID y
+(17, 9-9) MAYORQ >
+(17, 11-11) NUMENTERO 0
+(17, 1-1) NEWLINE \n
+(18, 1-1) INDENT
+(18, 5-5) ID y
+(18, 7-7) IGUAL =
+(18, 9-9) ID y
+(18, 11-11) RESTA -
+(18, 13-13) NUMENTERO 1
+(18, 1-1) NEWLINE \n
+(19, 5-9) WRITE write
+(19, 10-10) PARENI (
+(19, 11-11) ID y
+(19, 12-12) PAREND )
+(19, 1-1) NEWLINE \n
+(20, 1-1) NEWLINE \n
+(21, 1-1) DEDENT
+(21, 1-5) WHILE while
+(21, 7-12) ID activo
+(21, 14-16) AND and
+(21, 18-18) ID z
+(21, 20-20) MAYORQ >
+(21, 22-22) NUMENTERO 0
+(21, 1-1) NEWLINE \n
+(22, 1-1) INDENT
+(22, 5-5) ID z
+(22, 7-7) IGUAL =
+(22, 9-9) ID z
+(22, 11-11) RESTA -
+(22, 13-13) NUMENTERO 1
+(22, 1-1) NEWLINE \n
+(23, 1-1) NEWLINE \n
+(24, 1-1) DEDENT
+(24, 1-7) FUNCION funcion
+(24, 9-16) ID calcular
+(24, 17-17) PARENI (
+(24, 18-20) INT int
+(24, 22-22) ID a
+(24, 24-26) INT int
+(24, 28-28) ID b
+(24, 29-29) PAREND )
+(24, 30-30) DOSP :
+(24, 1-1) NEWLINE \n
+(25, 1-1) INDENT
+(25, 5-10) RETURN return
+(25, 12-12) ID a
+(25, 14-14) SUMA +
+(25, 16-16) ID b
+(25, 1-1) NEWLINE \n
+(26, 1-1) NEWLINE \n
+(27, 1-1) DEDENT
+(27, 1-7) FUNCION funcion
+(27, 9-17) ID verificar
+(27, 18-18) PARENI (
+(27, 19-22) BOOL bool
+(27, 24-29) ID estado
+(27, 31-36) DOUBLE double
+(27, 38-42) ID valor
+(27, 44-46) INT int
+(27, 48-55) ID cantidad
+(27, 56-56) PAREND )
+(27, 1-1) NEWLINE \n
+(28, 1-1) INDENT
+(28, 5-10) RETURN return
+(28, 12-17) ID estado
+(28, 1-1) NEWLINE \n
+(29, 1-1) DEDENT
+(29, 1-1) EOF $

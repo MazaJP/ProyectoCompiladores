@@ -1,0 +1,32 @@
+NOMBRE               TIPO     CATEGORIA    AMBITO       VALOR                LINEA
+--------------------------------------------------------------------------------
+texto                STRING   VARIABLE     global       Prueba de texto fase 3 proyecto línea 2
+MAYORIA              INT      CONSTANTE    global       18                   línea 6
+edad                 INT      VARIABLE     global       -                    línea 7
+resultado            STRING   VARIABLE     global       -                    línea 8
+BASE                 INT      CONSTANTE    global       10                   línea 17
+PI                   DOUBLE   CONSTANTE    global       3.1416               línea 18
+radio                DOUBLE   PARAMETRO    calcular     -                    línea 20
+b                    INT      PARAMETRO    calcular     -                    línea 20
+calcular             VOID     FUNCION      global       params=[DOUBLE, INT] línea 20
+area                 DOUBLE   VARIABLE     calcular     -                    línea 21
+suma                 INT      VARIABLE     calcular     -                    línea 22
+resta                INT      VARIABLE     calcular     -                    línea 23
+producto             INT      VARIABLE     calcular     -                    línea 24
+division             INT      VARIABLE     calcular     -                    línea 25
+mensaje              STRING   VARIABLE     calcular     resultado grande     línea 27
+radioValor           DOUBLE   VARIABLE     global       5.0                  línea 31
+bValor               INT      VARIABLE     global       3                    línea 32
+FACTOR               DOUBLE   CONSTANTE    global       1.5                  línea 37
+salario              INT      PARAMETRO    calcularBono -                    línea 39
+factor               DOUBLE   PARAMETRO    calcularBono -                    línea 39
+calcularBono         VOID     FUNCION      global       params=[INT, DOUBLE] línea 39
+bono                 DOUBLE   VARIABLE     calcularBono -                    línea 40
+salarioBase          INT      VARIABLE     global       5000                 línea 43
+bonificacion         DOUBLE   VARIABLE     global       7500.0               línea 44
+LIMITE               INT      CONSTANTE    global       5                    línea 50
+INCREMENTO           DOUBLE   CONSTANTE    global       1.5                  línea 51
+contador             INT      VARIABLE     global       1                    línea 52
+acumulado            DOUBLE   VARIABLE     global       1.5                  línea 53
+--------------------------------------------------------------------------------
+Total: 28 simbolos
